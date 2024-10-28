@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from 'model/user.m';
-import { UserController } from 'controller/user.c';
-import { UserService } from 'service/user.s';
+import { User, UserSchema } from './model/user.m';
+import { UserController } from './controller/user.c';
+import { UserService } from './service/user.s';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
