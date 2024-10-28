@@ -5,8 +5,23 @@ const app_module_1 = require("./app.module");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.enableCors({
-        origin: "*",
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        origin: [
+            "http://localhost:4000",
+            "https://frontend-hw-user-registration.vercel.app"
+        ],
+        methods: [
+            'GET',
+            'HEAD',
+            'PUT',
+            'PATCH',
+            'POST',
+            'DELETE',
+            'OPTIONS'
+        ],
+        allowedHeaders: [
+            'Content-Type',
+            'Authorization',
+        ],
         credentials: true,
     });
     await app.listen(process.env.PORT ?? 3000);
