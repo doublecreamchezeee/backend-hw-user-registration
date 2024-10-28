@@ -4,8 +4,8 @@ import { RegisterRequest } from '../dto/request/RegisterRequest.dto';
 import { LoginRequest } from '../dto/request/LoginRequest.dto';
 import { RegisterResponse } from '../dto/response/registerResponse.dto';
 import { LoginResponse } from '../dto/response/loginResponse.dto';
-import { User } from 'src/model/user.m';
-import { ApiResponse } from 'src/dto/response/apiResponse';
+import { User } from 'model/user.m';
+import { ApiResponse } from 'dto/response/apiResponse';
 
 @Controller('user')
 export class UserController {

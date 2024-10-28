@@ -1,9 +1,9 @@
 import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User } from '../model/user.m';
-import { RegisterRequest } from '../dto/request/RegisterRequest.dto';
-import { LoginRequest } from '../dto/request/LoginRequest.dto';
+import { User } from 'model/user.m';
+import { RegisterRequest } from 'dto/request/RegisterRequest.dto';
+import { LoginRequest } from 'dto/request/LoginRequest.dto';
 import * as bcrypt from 'bcryptjs';
 
 @Injectable()
