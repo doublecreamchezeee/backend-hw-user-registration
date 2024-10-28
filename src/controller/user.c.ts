@@ -1,9 +1,9 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { UserService } from '../service/user.s';
-import { RegisterRequest } from '../dto/request/RegisterRequest.dto';
-import { LoginRequest } from '../dto/request/LoginRequest.dto';
-import { RegisterResponse } from '../dto/response/registerResponse.dto';
-import { LoginResponse } from '../dto/response/loginResponse.dto';
+import { UserService } from 'service/user.s';
+import { RegisterRequest } from 'dto/request/RegisterRequest.dto';
+import { LoginRequest } from 'dto/request/LoginRequest.dto';
+import { RegisterResponse } from 'dto/response/registerResponse.dto';
+import { LoginResponse } from 'dto/response/loginResponse.dto';
 import { User } from 'model/user.m';
 import { ApiResponse } from 'dto/response/apiResponse';
 
