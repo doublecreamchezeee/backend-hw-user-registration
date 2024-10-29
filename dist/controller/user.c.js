@@ -33,15 +33,16 @@ let UserController = class UserController {
                 .withMessage('User registered successfully')
                 .withData(registerResponse)
                 .build();
-            res.set('Access-Control-Allow-Origin', '*');
-            res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
-            res.set('Access-Control-Allow-Credentials', 'true');
             res.status(common_1.HttpStatus.CREATED).json(response);
         }
         catch (error) {
-            res.status(common_1.HttpStatus.BAD_REQUEST).json({
-                message: error.message,
-            });
+            const errorMessage = error.message || 'Registration failed';
+            const errorResponse = apiResponse_1.ApiResponse.builder()
+                .withStatusCode(common_1.HttpStatus.BAD_REQUEST)
+                .withMessage(errorMessage)
+                .withData(null)
+                .build();
+            res.status(common_1.HttpStatus.BAD_REQUEST).json(errorResponse);
         }
     }
     async login(request, res) {
@@ -50,7 +51,7 @@ let UserController = class UserController {
             const loginResponse = new loginResponse_dto_1.LoginResponse(200, "Login successful");
             const response = apiResponse_1.ApiResponse.builder()
                 .withStatusCode(common_1.HttpStatus.OK)
-                .withMessage('Login successful')
+                .withMessage('Request api successful')
                 .withData(loginResponse)
                 .build();
             res.set('Access-Control-Allow-Origin', '*');
@@ -59,9 +60,17 @@ let UserController = class UserController {
             res.status(common_1.HttpStatus.OK).json(response);
         }
         catch (error) {
-            res.status(common_1.HttpStatus.UNAUTHORIZED).json({
-                message: error.message,
-            });
+            const errorMessage = error.message || 'Login failed';
+            const loginResponse = new loginResponse_dto_1.LoginResponse(common_1.HttpStatus.UNAUTHORIZED, errorMessage);
+            const response = apiResponse_1.ApiResponse.builder()
+                .withStatusCode(common_1.HttpStatus.UNAUTHORIZED)
+                .withMessage('Authentication failed')
+                .withData(loginResponse)
+                .build();
+            res.set('Access-Control-Allow-Origin', '*');
+            res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
+            res.set('Access-Control-Allow-Credentials', 'true');
+            res.status(common_1.HttpStatus.UNAUTHORIZED).json(response);
         }
     }
 };

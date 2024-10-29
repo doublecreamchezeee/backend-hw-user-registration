@@ -3,7 +3,6 @@ export class ApiResponse<T> {
         public readonly statusCode: number,
         public readonly message: string,
         public readonly data: T | null,
-        public readonly error: string | null,
     ) {}
 
     static builder<T>() {
@@ -12,10 +11,9 @@ export class ApiResponse<T> {
 }
 
 class ApiResponseBuilder<T> {
-    private statusCode: number = 200; // Default status code
+    private statusCode: number = 200;
     private message: string = '';
     private data: T | null = null;
-    private error: string | null = null;
 
     withStatusCode(statusCode: number): ApiResponseBuilder<T> {
         this.statusCode = statusCode;
@@ -32,12 +30,7 @@ class ApiResponseBuilder<T> {
         return this;
     }
 
-    withError(error: string): ApiResponseBuilder<T> {
-        this.error = error;
-        return this;
-    }
-
     build(): ApiResponse<T> {
-        return new ApiResponse<T>(this.statusCode, this.message, this.data, this.error);
+        return new ApiResponse<T>(this.statusCode, this.message, this.data);
     }
 }

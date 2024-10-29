@@ -2,11 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ApiResponse = void 0;
 class ApiResponse {
-    constructor(statusCode, message, data, error) {
+    constructor(statusCode, message, data) {
         this.statusCode = statusCode;
         this.message = message;
         this.data = data;
-        this.error = error;
     }
     static builder() {
         return new ApiResponseBuilder();
@@ -18,7 +17,6 @@ class ApiResponseBuilder {
         this.statusCode = 200;
         this.message = '';
         this.data = null;
-        this.error = null;
     }
     withStatusCode(statusCode) {
         this.statusCode = statusCode;
@@ -32,12 +30,8 @@ class ApiResponseBuilder {
         this.data = data;
         return this;
     }
-    withError(error) {
-        this.error = error;
-        return this;
-    }
     build() {
-        return new ApiResponse(this.statusCode, this.message, this.data, this.error);
+        return new ApiResponse(this.statusCode, this.message, this.data);
     }
 }
 //# sourceMappingURL=apiResponse.js.map

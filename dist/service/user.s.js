@@ -35,8 +35,11 @@ let UserService = class UserService {
     async login(request) {
         const { email, password } = request;
         const user = await this.userModel.findOne({ email });
-        if (!user || !(await bcrypt.compare(password, user.password))) {
-            throw new common_1.UnauthorizedException('Invalid credentials');
+        if (!user) {
+            throw new common_1.UnauthorizedException('Email doesnt exist');
+        }
+        else if (!user || !(await bcrypt.compare(password, user.password))) {
+            throw new common_1.UnauthorizedException('Wrong password');
         }
         return user;
     }
