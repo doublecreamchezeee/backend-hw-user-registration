@@ -5,7 +5,7 @@ import { RegisterRequest } from '../dto/request/RegisterRequest.dto';
 import { LoginRequest } from '../dto/request/LoginRequest.dto';
 import { RegisterResponse } from '../dto/response/RegisterResponse.dto';
 import { LoginResponse } from '../dto/response/LoginResponse.dto';
-import { ApiResponse } from '../dto/response/ApiResponse';
+import { ApiResponse } from '../dto/response/ApiResponse.dto';
 
 @Controller('auth')
 export class AuthController {

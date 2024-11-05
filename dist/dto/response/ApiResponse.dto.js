@@ -34,4 +34,4 @@ class ApiResponseBuilder {
         return new ApiResponse(this.statusCode, this.message, this.data);
     }
 }
-//# sourceMappingURL=ApiResponse.js.map
+//# sourceMappingURL=ApiResponse.dto.js.map

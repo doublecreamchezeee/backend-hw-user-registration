@@ -19,7 +19,7 @@ const RegisterRequest_dto_1 = require("../dto/request/RegisterRequest.dto");
 const LoginRequest_dto_1 = require("../dto/request/LoginRequest.dto");
 const RegisterResponse_dto_1 = require("../dto/response/RegisterResponse.dto");
 const LoginResponse_dto_1 = require("../dto/response/LoginResponse.dto");
-const ApiResponse_1 = require("../dto/response/ApiResponse");
+const ApiResponse_dto_1 = require("../dto/response/ApiResponse.dto");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
@@ -28,7 +28,7 @@ let AuthController = class AuthController {
         try {
             const user = await this.authService.register(request);
             const registerResponse = new RegisterResponse_dto_1.RegisterResponse(user.id, user.email, user.createdAt);
-            const response = ApiResponse_1.ApiResponse.builder()
+            const response = ApiResponse_dto_1.ApiResponse.builder()
                 .withStatusCode(common_1.HttpStatus.CREATED)
                 .withMessage('User registered successfully')
                 .withData(registerResponse)
@@ -37,7 +37,7 @@ let AuthController = class AuthController {
         }
         catch (error) {
             const errorMessage = error.message || 'Registration failed';
-            const errorResponse = ApiResponse_1.ApiResponse.builder()
+            const errorResponse = ApiResponse_dto_1.ApiResponse.builder()
                 .withStatusCode(common_1.HttpStatus.BAD_REQUEST)
                 .withMessage(errorMessage)
                 .withData(null)
@@ -49,7 +49,7 @@ let AuthController = class AuthController {
         try {
             const { token } = await this.authService.login(request);
             const loginResponse = new LoginResponse_dto_1.LoginResponse(200, "Login successful", token);
-            const response = ApiResponse_1.ApiResponse.builder()
+            const response = ApiResponse_dto_1.ApiResponse.builder()
                 .withStatusCode(common_1.HttpStatus.OK)
                 .withMessage('Login successful')
                 .withData(loginResponse)
@@ -59,7 +59,7 @@ let AuthController = class AuthController {
         catch (error) {
             const errorMessage = error.message || 'Login failed';
             const loginResponse = new LoginResponse_dto_1.LoginResponse(common_1.HttpStatus.UNAUTHORIZED, errorMessage, '');
-            const response = ApiResponse_1.ApiResponse.builder()
+            const response = ApiResponse_dto_1.ApiResponse.builder()
                 .withStatusCode(common_1.HttpStatus.UNAUTHORIZED)
                 .withMessage('Authentication failed')
                 .withData(loginResponse)

@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const user_s_1 = require("../service/user.s");
-const ApiResponse_1 = require("../dto/response/ApiResponse");
+const ApiResponse_dto_1 = require("../dto/response/ApiResponse.dto");
 const ProfileResponse_dto_1 = require("../dto/response/ProfileResponse.dto");
 const jwtAuth_guard_1 = require("../auth/jwtAuth.guard");
 let UserController = class UserController {
@@ -24,7 +24,7 @@ let UserController = class UserController {
     }
     async getProfile(userEmail, res) {
         if (!userEmail) {
-            const errorResponse = ApiResponse_1.ApiResponse.builder()
+            const errorResponse = ApiResponse_dto_1.ApiResponse.builder()
                 .withStatusCode(common_1.HttpStatus.UNAUTHORIZED)
                 .withMessage('User not authenticated')
                 .withData(null)
@@ -35,7 +35,7 @@ let UserController = class UserController {
         try {
             const user = await this.userService.findByEmail(userEmail);
             const profileResponse = new ProfileResponse_dto_1.ProfileResponse(user);
-            const response = ApiResponse_1.ApiResponse.builder()
+            const response = ApiResponse_dto_1.ApiResponse.builder()
                 .withStatusCode(common_1.HttpStatus.OK)
                 .withMessage('User profile retrieved successfully')
                 .withData(profileResponse)
@@ -44,7 +44,7 @@ let UserController = class UserController {
         }
         catch (error) {
             const errorMessage = error.message || 'Failed to retrieve profile';
-            const errorResponse = ApiResponse_1.ApiResponse.builder()
+            const errorResponse = ApiResponse_dto_1.ApiResponse.builder()
                 .withStatusCode(common_1.HttpStatus.BAD_REQUEST)
                 .withMessage(errorMessage)
                 .withData(null)
