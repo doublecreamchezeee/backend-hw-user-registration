@@ -2,10 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoginResponse = void 0;
 class LoginResponse {
-    constructor(loginCode, message) {
+    constructor(loginCode, message, token) {
         this.loginCode = loginCode;
         this.message = message;
+        this.token = token;
     }
 }
 exports.LoginResponse = LoginResponse;
-//# sourceMappingURL=loginResponse.dto.js.map
+//# sourceMappingURL=LoginResponse.dto.js.map

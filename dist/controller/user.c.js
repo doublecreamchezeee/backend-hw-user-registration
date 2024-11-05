@@ -15,28 +15,35 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const user_s_1 = require("../service/user.s");
-const RegisterRequest_dto_1 = require("../dto/request/RegisterRequest.dto");
-const LoginRequest_dto_1 = require("../dto/request/LoginRequest.dto");
-const registerResponse_dto_1 = require("../dto/response/registerResponse.dto");
-const loginResponse_dto_1 = require("../dto/response/loginResponse.dto");
 const apiResponse_1 = require("../dto/response/apiResponse");
+const ProfileResponse_dto_1 = require("../dto/response/ProfileResponse.dto");
+const jwtAuth_guard_1 = require("../auth/jwtAuth.guard");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
     }
-    async register(request, res) {
-        try {
-            const user = await this.userService.register(request);
-            const registerResponse = new registerResponse_dto_1.RegisterResponse(user.id, user.email, user.createdAt);
-            const response = apiResponse_1.ApiResponse.builder()
-                .withStatusCode(common_1.HttpStatus.CREATED)
-                .withMessage('User registered successfully')
-                .withData(registerResponse)
+    async getProfile(userEmail, res) {
+        if (!userEmail) {
+            const errorResponse = apiResponse_1.ApiResponse.builder()
+                .withStatusCode(common_1.HttpStatus.UNAUTHORIZED)
+                .withMessage('User not authenticated')
+                .withData(null)
                 .build();
-            res.status(common_1.HttpStatus.CREATED).json(response);
+            res.status(common_1.HttpStatus.UNAUTHORIZED).json(errorResponse);
+            return;
+        }
+        try {
+            const user = await this.userService.findByEmail(userEmail);
+            const profileResponse = new ProfileResponse_dto_1.ProfileResponse(user);
+            const response = apiResponse_1.ApiResponse.builder()
+                .withStatusCode(common_1.HttpStatus.OK)
+                .withMessage('User profile retrieved successfully')
+                .withData(profileResponse)
+                .build();
+            res.status(common_1.HttpStatus.OK).json(response);
         }
         catch (error) {
-            const errorMessage = error.message || 'Registration failed';
+            const errorMessage = error.message || 'Failed to retrieve profile';
             const errorResponse = apiResponse_1.ApiResponse.builder()
                 .withStatusCode(common_1.HttpStatus.BAD_REQUEST)
                 .withMessage(errorMessage)
@@ -45,52 +52,17 @@ let UserController = class UserController {
             res.status(common_1.HttpStatus.BAD_REQUEST).json(errorResponse);
         }
     }
-    async login(request, res) {
-        try {
-            const user = await this.userService.login(request);
-            const loginResponse = new loginResponse_dto_1.LoginResponse(200, "Login successful");
-            const response = apiResponse_1.ApiResponse.builder()
-                .withStatusCode(common_1.HttpStatus.OK)
-                .withMessage('Request api successful')
-                .withData(loginResponse)
-                .build();
-            res.set('Access-Control-Allow-Origin', '*');
-            res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
-            res.set('Access-Control-Allow-Credentials', 'true');
-            res.status(common_1.HttpStatus.OK).json(response);
-        }
-        catch (error) {
-            const errorMessage = error.message || 'Login failed';
-            const loginResponse = new loginResponse_dto_1.LoginResponse(common_1.HttpStatus.UNAUTHORIZED, errorMessage);
-            const response = apiResponse_1.ApiResponse.builder()
-                .withStatusCode(common_1.HttpStatus.UNAUTHORIZED)
-                .withMessage('Authentication failed')
-                .withData(loginResponse)
-                .build();
-            res.set('Access-Control-Allow-Origin', '*');
-            res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
-            res.set('Access-Control-Allow-Credentials', 'true');
-            res.status(common_1.HttpStatus.UNAUTHORIZED).json(response);
-        }
-    }
 };
 exports.UserController = UserController;
 __decorate([
-    (0, common_1.Post)('register'),
-    __param(0, (0, common_1.Body)()),
+    (0, common_1.UseGuards)(jwtAuth_guard_1.JwtAuthGuard),
+    (0, common_1.Get)('profile'),
+    __param(0, (0, common_1.Query)('email')),
     __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [RegisterRequest_dto_1.RegisterRequest, Object]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
-], UserController.prototype, "register", null);
-__decorate([
-    (0, common_1.Post)('login'),
-    __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [LoginRequest_dto_1.LoginRequest, Object]),
-    __metadata("design:returntype", Promise)
-], UserController.prototype, "login", null);
+], UserController.prototype, "getProfile", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_s_1.UserService])

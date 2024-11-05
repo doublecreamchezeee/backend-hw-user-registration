@@ -9,4 +9,4 @@ class RegisterResponse {
     }
 }
 exports.RegisterResponse = RegisterResponse;
-//# sourceMappingURL=registerResponse.dto.js.map
+//# sourceMappingURL=RegisterResponse.dto.js.map

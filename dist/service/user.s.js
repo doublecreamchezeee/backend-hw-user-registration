@@ -17,29 +17,21 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const user_m_1 = require("../model/user.m");
-const bcrypt = require("bcryptjs");
 let UserService = class UserService {
     constructor(userModel) {
         this.userModel = userModel;
     }
-    async register(request) {
-        const { email, password } = request;
-        const existingUser = await this.userModel.findOne({ email });
-        if (existingUser) {
-            throw new common_1.BadRequestException('Email already exists');
-        }
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new this.userModel({ email, password: hashedPassword });
-        return newUser.save();
+    async create(userData) {
+        const user = new this.userModel(userData);
+        return user.save();
     }
-    async login(request) {
-        const { email, password } = request;
-        const user = await this.userModel.findOne({ email });
+    async findByEmail(email) {
+        return this.userModel.findOne({ email });
+    }
+    async getProfile(userId) {
+        const user = await this.userModel.findById(userId).select('-password');
         if (!user) {
-            throw new common_1.UnauthorizedException('Email doesnt exist');
-        }
-        else if (!user || !(await bcrypt.compare(password, user.password))) {
-            throw new common_1.UnauthorizedException('Wrong password');
+            throw new common_1.BadRequestException('User not found');
         }
         return user;
     }

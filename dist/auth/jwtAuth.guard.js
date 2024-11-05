@@ -6,23 +6,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.JwtAuthGuard = void 0;
 const common_1 = require("@nestjs/common");
-const mongoose_1 = require("@nestjs/mongoose");
-const dotenv = require("dotenv");
-const user_module_1 = require("./module/user.module");
-const auth_module_1 = require("./auth/auth.module");
-dotenv.config();
-let AppModule = class AppModule {
+const passport_1 = require("@nestjs/passport");
+let JwtAuthGuard = class JwtAuthGuard extends (0, passport_1.AuthGuard)('jwt') {
 };
-exports.AppModule = AppModule;
-exports.AppModule = AppModule = __decorate([
-    (0, common_1.Module)({
-        imports: [
-            mongoose_1.MongooseModule.forRoot(process.env.MONGODB_URI),
-            user_module_1.UserModule,
-            auth_module_1.AuthModule,
-        ],
-    })
-], AppModule);
-//# sourceMappingURL=app.module.js.map
+exports.JwtAuthGuard = JwtAuthGuard;
+exports.JwtAuthGuard = JwtAuthGuard = __decorate([
+    (0, common_1.Injectable)()
+], JwtAuthGuard);
+//# sourceMappingURL=jwtAuth.guard.js.map
