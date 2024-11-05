@@ -1,4 +1,3 @@
-// registerResponse.dto.ts
 export class RegisterResponse {
     id: string;
     email: string;
