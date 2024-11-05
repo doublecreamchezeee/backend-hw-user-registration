@@ -1,7 +1,7 @@
 import { Controller, Get, Patch, Req, Res, Body, HttpStatus, UseGuards, Query } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UserService } from '../service/user.s';
-import { ApiResponse } from '../dto/response/apiResponse';
+import { ApiResponse } from '../dto/response/ApiResponse';
 import { ProfileResponse } from '../dto/response/ProfileResponse.dto';
 import { User } from '../model/user.m';
 import { JwtAuthGuard } from '../auth/jwtAuth.guard';

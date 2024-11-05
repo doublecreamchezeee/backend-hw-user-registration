@@ -3,9 +3,9 @@ import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { RegisterRequest } from '../dto/request/RegisterRequest.dto';
 import { LoginRequest } from '../dto/request/LoginRequest.dto';
-import { RegisterResponse } from '../dto/response/registerResponse.dto';
-import { LoginResponse } from '../dto/response/loginResponse.dto';
-import { ApiResponse } from '../dto/response/apiResponse';
+import { RegisterResponse } from '../dto/response/RegisterResponse.dto';
+import { LoginResponse } from '../dto/response/LoginResponse.dto';
+import { ApiResponse } from '../dto/response/ApiResponse';
 
 @Controller('auth')
 export class AuthController {
