@@ -39,8 +39,8 @@ export class AuthController {
     @Post('login')
     async login(@Body() request: LoginRequest, @Res() res: Response): Promise<void> {
         try {
-            const { token } = await this.authService.login(request);
-            const loginResponse = new LoginResponse(200, "Login successful", token);
+            const { token, email } = await this.authService.login(request);
+            const loginResponse = new LoginResponse(200, "Login successful", token, email);
 
             const response: ApiResponse<LoginResponse> = ApiResponse.builder<LoginResponse>()
                 .withStatusCode(HttpStatus.OK)
@@ -51,7 +51,7 @@ export class AuthController {
             res.status(HttpStatus.OK).json(response);
         } catch (error) {
             const errorMessage = error.message || 'Login failed';
-            const loginResponse = new LoginResponse(HttpStatus.UNAUTHORIZED, errorMessage, '');
+            const loginResponse = new LoginResponse(HttpStatus.UNAUTHORIZED, errorMessage, '', '');
 
             const response: ApiResponse<LoginResponse> = ApiResponse.builder<LoginResponse>()
                 .withStatusCode(HttpStatus.UNAUTHORIZED)
